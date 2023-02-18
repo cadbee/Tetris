@@ -1,6 +1,6 @@
 # Tetris
 Tetris on pure JS, CSS and HTML
 
-![image](https://user-images.githubusercontent.com/71726365/219897133-a576d5de-d74d-438c-9ed3-d605ca125287.png)
+![image](https://user-images.githubusercontent.com/71726365/219897543-cf719a94-7a18-4ccc-9a72-a81077be19b9.png)
 
-![image](https://user-images.githubusercontent.com/71726365/219897458-a920cd1b-3eb2-42f3-bc18-8cf316055b14.png)
+![image](https://user-images.githubusercontent.com/71726365/219898271-2865c553-2416-4c51-ae9d-3c9f69f36c70.png)

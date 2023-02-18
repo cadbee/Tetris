@@ -1,5 +1,5 @@
 # Tetris
-Tetris on pure JS, CSS and HTML
+Tetris on pure JS, CSS and HTML. [Demo](https://clck.ru/33aGkW)
 
 ![image](https://user-images.githubusercontent.com/71726365/219897543-cf719a94-7a18-4ccc-9a72-a81077be19b9.png)
 

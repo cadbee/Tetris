@@ -1,0 +1,85 @@
+@font-face {
+    font-family: 'Tetris';
+    src: local('sans'),
+    url('../fonts/Tetris.ttf');
+}
+
+body, html {
+    height: 100%;
+    margin: 0 auto;
+    background: url("../images/russia.jpg") no-repeat center;
+    background-size: cover;
+}
+
+.container{
+    text-shadow: red 2px 5px 10px;
+    font-family: 'Tetris', sans-serif;
+    position: relative;
+    top: 10%;
+    max-width: 520px;
+    margin: 0 auto;
+    height: 600px;
+}
+
+.nameInput{
+
+}
+input[type=text]{
+    padding: 6px 20px;
+    display: inline-block;
+    border: 1px solid #cccccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+}
+
+.name_input{
+    color: #ffffff; /* Красный цвет символов */
+    font-size: 180%; /* Размер шрифта в процентах */
+    position: relative; /* Относительное позиционирование */
+    top: 5px;
+}
+
+#goButton{
+    position: absolute;
+    right: 33%;
+    color: #ffffff;
+    margin: 2%;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    border-radius: 12px;
+    background-color: rgba(56, 56, 56, 0.44);
+    border: 2px solid #ea0000;
+    font-family: 'Tetris', sans-serif;
+    font-size: 25px;
+    padding: 10px 20px 10px 20px;
+}
+
+
+#goButton:hover {
+    margin: 2%;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    border-radius: 12px;
+    background-color: rgba(56, 56, 56, 0.44);
+    border: 2px solid #ea0000;
+    font-size: 25px;
+    padding: 10px 20px 10px 20px;
+    color: #000000;
+    background-color: #ff0000;
+}
+
+table {
+    top: 20%;
+    position: absolute;
+    border-collapse: collapse;
+}
+
+table, th, td {
+    text-align: center;
+    color: #fff;
+    font-size: 120%;
+    padding: 5px;
+    border: 1px solid white;
+}
+
+th, td {
+    width: 300px;
+}

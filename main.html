@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<script type="text/javascript" src="js/Figures.js"></script>
+<script type="text/javascript" src="js/Tetris.js"></script>
+<link href="css/main_style.css" rel="stylesheet">
+<head>
+    <link rel="icon" href="images/favicon.svg" type="image/x-icon">
+    <meta charset="UTF-8">
+    <title>Tetris</title>
+</head>
+<body>
+
+<audio id="my-audio-id" src="music/theme.mp3" autoplay="autoplay" loop></audio>
+
+<div class="container">
+    <div class="main_grid">
+        <canvas class="mainfield" id="mainField"></canvas>
+        <canvas class="gridCanvas" id="gridcanvas"></canvas>
+    </div>
+    <div class="nextFigContainer">
+        <span class="nff" id="nffff">
+                    Next Figure:
+        </span>
+        <canvas class="nextFigField" id="nextFigureField"></canvas>
+    </div>
+    <div class="scoreLabel">
+        <span class="score_label">Score:<br></span>
+        <canvas class="bb" id="score"></canvas>
+    </div>
+    <span class="userLabel" id="username">User: </span>
+    <span class="levelLabel" id='level'>Level: 1</span>
+    <div class="buttons">
+        <button type='button' class="btnStyle" id='startButton' onclick="restart()">START</button>
+        <button type='button' class="btnStyle" id='pauseButton' disabled onclick="pause()">PAUSE</button>
+        <button type='button' class="btnStyle" id='mainButton' onclick="toMain()">MAIN</button>
+    </div>
+</div>
+<div class="myMusic">
+    <img id="img" src="images/gopnik.png" alt="">
+    <div class="musicButtons">
+        <button type='button' class="btnStyle" onclick="document.getElementById('my-audio-id').play()">ON</button>
+        <button type='button' class="btnStyle" onclick="document.getElementById('my-audio-id').pause()">OFF</button>
+        <button type='button' class="btnStyle" onclick="document.getElementById('my-audio-id').volume -= 0.1">-</button>
+        <button type='button' class="btnStyle" onclick="document.getElementById('my-audio-id').volume += 0.1">+</button>
+    </div>
+</div>
+
+<script>
+    document.getElementById('my-audio-id').volume = 0.1;
+    document.getElementById('username').textContent += localStorage['current_user'];
+    const main_canvas = document.getElementById('mainField');
+    const next_figure_canvas = document.getElementById('nextFigureField');
+    const score_canvas = document.getElementById('score');
+    let level_context = document.getElementById('level');
+    const grid_canvas = document.getElementById('gridcanvas');
+    let grid_context;
+    let main_context;
+    let next_figure_context;
+    let score_context;
+    if (main_canvas.getContext && next_figure_canvas.getContext && score_canvas.getContext) {
+        main_context = main_canvas.getContext('2d');
+        main_canvas.width = STEP * SQUARES_WIDTH;
+        main_canvas.height = STEP * SQUARES_HEIGHT;
+        grid_context = grid_canvas.getContext('2d');
+        grid_canvas.width = STEP * SQUARES_WIDTH;
+        grid_canvas.height = STEP * SQUARES_HEIGHT;
+        next_figure_context = next_figure_canvas.getContext('2d');
+        next_figure_canvas.width = STEP * 5;
+        next_figure_canvas.height = STEP * 4;
+        score_context = score_canvas.getContext('2d');
+        score_canvas.width = 175;
+        score_canvas.height = STEP * 2;
+    } else {
+        document.getElementById('startButton').disabled = true;
+        alert('Loading Error!');
+    }
+</script>
+</body>
+</html>

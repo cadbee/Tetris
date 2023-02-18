@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<script type="text/javascript" src="js/StartPage.js"></script>
+<link href="css/index_style.css" rel="stylesheet">
+
+<head>
+    <link rel="icon" href="images/favicon.svg" type="image/x-icon">
+    <meta charset="UTF-8">
+    <title>Tetris</title>
+</head>
+
+<body>
+<div class="container">
+    <div class="nameInput">
+        <span class="name_input">Enter your name:</span>
+        <input type="text" placeholder="Имя пользователя" id="username" size="20">
+    </div>
+    <button class="button_go" id="goButton">
+                <span style="font-weight: bold" onclick="saveRedirect()">
+                    START
+                </span>
+    </button>
+    <div class="tableClass">
+        <table id="table">
+            <thead>
+            <tr>
+                <td>Username</td>
+                <td>Score</td>
+            </tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+        </table>
+    </div>
+</div>
+<script>
+    checkUser();
+</script>
+</body>
+</html>

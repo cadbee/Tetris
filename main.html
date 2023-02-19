@@ -47,17 +47,22 @@
 </div>
 
 <script>
+    // Startup volume setting
     document.getElementById('my-audio-id').volume = 0.1;
+    // Getting the username from localstorage
     document.getElementById('username').textContent += localStorage['current_user'];
+    // Create canvas
     const main_canvas = document.getElementById('mainField');
     const next_figure_canvas = document.getElementById('nextFigureField');
     const score_canvas = document.getElementById('score');
     let level_context = document.getElementById('level');
     const grid_canvas = document.getElementById('gridcanvas');
+    // Get the context of each canvas
     let grid_context;
     let main_context;
     let next_figure_context;
     let score_context;
+    // If all is received successfully, set up the canvases
     if (main_canvas.getContext && next_figure_canvas.getContext && score_canvas.getContext) {
         main_context = main_canvas.getContext('2d');
         main_canvas.width = STEP * SQUARES_WIDTH;

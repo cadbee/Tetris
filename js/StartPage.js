@@ -1,3 +1,4 @@
+// If the user is new, add it to localstorage
 function checkUser() {
     let source = document.getElementById("username");
     let name = localStorage['current_user'];
@@ -11,6 +12,7 @@ function checkUser() {
         createTable();
 }
 
+// Sorting records in descending order
 function sortedScores() {
     let table_info = JSON.parse(localStorage['SCORE']);
     let sortable = [];
@@ -21,7 +23,7 @@ function sortedScores() {
         sortable.push(a);
     }
     sortable.sort(function (first, second) {
-        let cmp = first[1] - second[1];
+        let cmp = second[1] - first[1];
         if (cmp)
             return cmp;
         return first[0].localeCompare(second[0]);
@@ -29,6 +31,7 @@ function sortedScores() {
     return sortable;
 }
 
+// Creating a table of records
 function createTable() {
     let SCORE = sortedScores();
     let table_ref = document.getElementById('tableBody');
@@ -41,6 +44,7 @@ function createTable() {
     }
 }
 
+// Entering the game
 function saveRedirect() {
     let username = document.getElementById("username").value;
     if (username) {

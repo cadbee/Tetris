@@ -1,11 +1,14 @@
+// The class of the square of which the figures are composed
 class Square {
     constructor(x, y, color) {
         this.coordinates = [x + SQUARE_CENTER, y + SQUARE_CENTER];
         this.color = color;
     }
+    // Delete from canvas
     clear() {
         main_context.clearRect(this.coordinates[0] - SQUARE_CENTER, this.coordinates[1] - SQUARE_CENTER, STEP, STEP);
     }
+    // Draw on canvas
     draw(context, offset_x = 0, offset_y = 0){
         context.fillStyle = this.color;
         context.fillRect(this.coordinates[0]-SQUARE_CENTER+1-offset_x*STEP,
@@ -23,6 +26,7 @@ class Square {
     moveRight() {
         this.coordinates[0] += STEP;
     }
+    // Checking for rotational capability
     canRotate(center){
         let tmp_y = this.coordinates[1] - center.y;
         let tmp_x = this.coordinates[0] - center.x;
@@ -30,6 +34,7 @@ class Square {
         let new_y = center.y + tmp_x;
         return [new_x, new_y];
     }
+    // Move the square to rotate the figure
     rotate(center) {
         let tmp_y = this.coordinates[1] - center.y;
         let tmp_x = this.coordinates[0] - center.x;
@@ -38,12 +43,14 @@ class Square {
     }
 }
 
+// A class for implementing tetris shapes
 class Figure{
     constructor(){
         this.color = '#ffffff';
         this.center = null;
         this.squares = [];
     }
+    //Checking for ability to move in the field
     canMove(move_to = 0, move_down = true){
         let coordinates = [];
         for(let sq of this.squares)
@@ -63,6 +70,7 @@ class Figure{
         return true;
     }
 
+    // Checking for ability to rotate in the field
     canRotate() {
         let coordinates = [];
         for(let sq of this.squares)
@@ -85,6 +93,7 @@ class Figure{
         return true;
     }
 
+    // Moving down figure
     moveDown(need_draw = true) {
         if(need_draw) {
             this.matrixClear();
@@ -145,23 +154,27 @@ class Figure{
         this.draw(main_context);
         this.matrixFill();
     }
+    // Draw figure
     draw(context = main_context) {
         for(let sq of this.squares)
             sq.draw(context);
     }
+    // Delete figure from canvas
     clear() {
         for(let sq of this.squares)
             sq.clear();
     }
+    // Delete figure from field
     matrixClear() {
         for(let sq of this.squares)
             FIELD[Math.floor(sq.coordinates[1]/STEP) + 1][Math.floor(sq.coordinates[0]/STEP) + 1] = 0
     }
+    // Set figure at field
     matrixFill(){
         for(let sq of this.squares)
             FIELD[Math.floor(sq.coordinates[1]/STEP) + 1][Math.floor(sq.coordinates[0]/STEP) + 1] = 1;
     }
-
+    // Setup field and canvas
     fillField(context = main_context, offset_x = 0, offset_y = 0){
         if (context === main_context)
             this.matrixFill();

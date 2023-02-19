@@ -1,8 +1,10 @@
+// Constants for rendering the grid
 const STEP = 30;
 const SQUARES_WIDTH = 10;
 const SQUARES_HEIGHT = 20;
 const SQUARE_CENTER = STEP / 2;
 
+// Game states
 let MOVE_OPPORTUNITY = true;
 let PAUSED = false;
 
@@ -12,12 +14,15 @@ let SPEED = 800;
 
 let CUR_FIG;
 let NEXT_FIG;
+// Delay for the appearance of the figure
 let INTERVAL;
 let FIELD = [];
 
+// A list of all kinds of figures
 FIGURES_LIST = [FigureI, FigureJ, FigureO, FigureL, FigureZ, FigureS, FigureT];
 
 
+// Create the playing field as a two-dimensional array
 function setField() {
     for (let i = 0; i < SQUARES_HEIGHT + 2; i++) {
         FIELD[i] = [];
@@ -27,7 +32,9 @@ function setField() {
     }
 }
 
+// Checking the filling of lines
 function checkLinesToClear() {
+    // If one of the rows of the field is completely filled with 1, then delete it
     let for_delete = [];
     for (let i = SQUARES_HEIGHT; i > 1; i--) {
         let counter = 0;
@@ -44,8 +51,9 @@ function checkLinesToClear() {
     }
 }
 
-
+// Game score and speed update
 function updateScoreAndSpeed(full_lines_count) {
+    // Dependence of score increase on the number of filled lines
     switch (full_lines_count) {
         case 1:
             SCORE += 100;
@@ -62,12 +70,14 @@ function updateScoreAndSpeed(full_lines_count) {
         default:
 
     }
-    let new_level = Math.floor(SCORE/2000)+1;
-    if((new_level - LEVEL) >= 1){
+    let new_level = Math.floor(SCORE / 2000) + 1;
+    // Speed update
+    if ((new_level - LEVEL) >= 1) {
         LEVEL = new_level
         SPEED = Math.floor(SPEED * 0.9);
     }
     level_context.textContent = "Level: " + LEVEL;
+    // Set new game speed
     clearInterval(INTERVAL);
     INTERVAL = setInterval(mainAction, SPEED);
     score_context.clearRect(0, 0, score_canvas.width, score_canvas.height);
@@ -75,6 +85,7 @@ function updateScoreAndSpeed(full_lines_count) {
 
 }
 
+// Move the lines in place of the deleted ones and add new ones
 function resetFullLines(full_lines_list) {
     for (let line of full_lines_list)
         for (let j = line; j > 1; j--)
@@ -84,6 +95,7 @@ function resetFullLines(full_lines_list) {
             FIELD[i][j] = (j === 0 || j === SQUARES_WIDTH + 1) ? 1 : 0;
 }
 
+// Drawing lines
 function repaintFullLines(full_lines_list) {
     for (let line of full_lines_list.reverse()) {
         let data = main_context.getImageData(0, 0, main_canvas.width, (line - 1) * STEP);
@@ -92,6 +104,7 @@ function repaintFullLines(full_lines_list) {
     }
 }
 
+// Check if the next figure can appear
 function canSpawnCheck() {
     for (let sq of NEXT_FIG.squares)
         if (FIELD[Math.floor(sq.coordinates[1] / STEP) + 1][Math.floor(sq.coordinates[0] / STEP) + 1])
@@ -99,15 +112,19 @@ function canSpawnCheck() {
     return true;
 }
 
+// The main action of the game
 function mainAction() {
     if (PAUSED === false) {
+        // Move down current figure
         if (CUR_FIG.canMove())
             CUR_FIG.moveDown();
+        // After the figure is down, check if the lines are filled in
         else {
             checkLinesToClear();
             if (!canSpawnCheck()) {
                 exit();
             } else {
+                // Set new figure
                 CUR_FIG = NEXT_FIG;
                 CUR_FIG.fillField();
                 NEXT_FIG = new FIGURES_LIST[Math.floor(Math.random() * FIGURES_LIST.length)]();
@@ -123,6 +140,7 @@ function mainAction() {
     }
 }
 
+// Start of a new game
 function newGame() {
     MOVE_OPPORTUNITY = true;
     clearInterval(INTERVAL);
@@ -140,6 +158,7 @@ function newGame() {
     INTERVAL = setInterval(mainAction, SPEED); //скорость игры, мс
 }
 
+// Keyboard keystroke processing
 document.addEventListener('keydown', (event) => {
     const keyCode = event.keyCode;
     if (MOVE_OPPORTUNITY && !PAUSED)
@@ -183,7 +202,9 @@ document.addEventListener('keydown', (event) => {
         }
 });
 
+// End of the game
 function exit() {
+    // Reset all settings
     MOVE_OPPORTUNITY = false;
     clearInterval(INTERVAL);
     main_context.clearRect(0, 0, main_canvas.width, main_canvas.height);
@@ -200,6 +221,7 @@ function exit() {
 }
 
 
+// Sets the center of the figure, relative to which it will be rotated and appear
 function nextFigurePosition() {
     let figure_name = NEXT_FIG.constructor.name;
     switch (figure_name) {
@@ -211,6 +233,7 @@ function nextFigurePosition() {
 }
 
 
+// Getting records from localstorage
 function updateScoreTable() {
     if (localStorage['current_score'] < SCORE)
         localStorage['current_score'] = SCORE;
@@ -227,12 +250,12 @@ function updateScoreTable() {
         records = {};
         records[localStorage['current_user']] = SCORE;
     }
-    console.log(records);
     localStorage['SCORE'] = JSON.stringify(records);
     LEVEL = 0;
     SCORE = 0;
 }
 
+// Restart the game
 function restart() {
     document.getElementById('mainButton').disabled = true;
     document.getElementById('pauseButton').disabled = false;
@@ -243,7 +266,7 @@ function restart() {
     newGame();
 }
 
-
+// Drawing the canvas for the next figure
 function drawNextGrid(stepX, stepY, color, lineWidth) {
     for (let i = 0.5 + stepX; i < next_figure_canvas.width; i += stepX) {
         next_figure_context.moveTo(i, 0);
@@ -259,6 +282,7 @@ function drawNextGrid(stepX, stepY, color, lineWidth) {
     next_figure_context.beginPath();
 }
 
+// Drawing the canvas for the current figure
 function drawGrid(stepX, stepY, color, lineWidth) {
     for (let i = 0.5 + stepX; i < grid_canvas.width; i += stepX) {
         grid_context.moveTo(i, 0);
@@ -274,6 +298,7 @@ function drawGrid(stepX, stepY, color, lineWidth) {
     grid_context.beginPath();
 }
 
+// Pause the game
 function pause() {
     if (PAUSED === false) {
         PAUSED = true;
@@ -290,6 +315,7 @@ function pause() {
 
 }
 
+// Return to the index page
 function toMain() {
     window.location = 'index.html';
 }
